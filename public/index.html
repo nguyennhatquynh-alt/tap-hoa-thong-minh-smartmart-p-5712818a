@@ -117,6 +117,32 @@
     <p x-show="items.length === 0" class="text-xs text-slate-500 text-center py-3">Chưa có khoản nào được ghi.</p>
   </div>
 </section>
+<section x-data="cap_lock()" x-init="init()" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
+  <div class="flex items-center justify-between">
+    <h3 class="text-sm font-bold text-white">Khóa ứng dụng bằng mã PIN</h3>
+    <span class="text-[11px]" :class="isSet ? 'text-emerald-400' : 'text-slate-500'" x-text="isSet ? 'Đang bật' : 'Chưa bật'"></span>
+  </div>
+  <p x-show="preview" class="text-xs text-slate-400">Đây là bản xem thử. Khóa PIN hoạt động khi bạn mở ứng dụng thật bằng đường dẫn chính thức hoặc ứng dụng đã cài.</p>
+  <p x-show="!preview && !supported" class="text-xs text-amber-300">Thiết bị hoặc trình duyệt này chưa hỗ trợ khóa PIN. Hãy mở ứng dụng bằng đường dẫn bảo mật (https).</p>
+  <div x-show="!preview && supported" class="space-y-2">
+    <div x-show="!isSet" class="space-y-2">
+      <input type="password" inputmode="numeric" maxlength="6" x-model="a" placeholder="Mã PIN mới (4 đến 6 số)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500">
+      <input type="password" inputmode="numeric" maxlength="6" x-model="b" placeholder="Nhập lại mã PIN" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500">
+      <button @click="save()" class="w-full py-2 bg-amber-500 text-slate-950 font-bold text-sm rounded-xl">Bật khóa</button>
+    </div>
+    <div x-show="isSet" class="space-y-2">
+      <input type="password" inputmode="numeric" maxlength="6" x-model="cur" placeholder="Mã PIN hiện tại" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500">
+      <input type="password" inputmode="numeric" maxlength="6" x-model="a" placeholder="Mã PIN mới (chỉ điền khi đổi mã)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500">
+      <div class="grid grid-cols-2 gap-2">
+        <button @click="change()" class="py-2 bg-amber-500 text-slate-950 font-bold text-sm rounded-xl">Đổi mã</button>
+        <button @click="turnOff()" class="py-2 bg-slate-950 border border-slate-800 text-rose-300 text-sm rounded-xl">Tắt khóa</button>
+      </div>
+      <button @click="lockNow()" class="w-full py-2 bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-xl">Khóa ngay</button>
+    </div>
+    <p x-show="msg" class="text-xs text-amber-300" x-text="msg"></p>
+    <p class="text-[11px] text-slate-500">Mã PIN chỉ nằm trên thiết bị này. Khóa giúp người khác không mở được ứng dụng trên máy của bạn, nhưng không mã hóa dữ liệu. Nếu quên mã, bạn phải xóa dữ liệu trên thiết bị này rồi đặt lại (có thể khôi phục từ bản sao lưu).</p>
+  </div>
+</section>
 <section x-data="cap_journal()" x-init="init()" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
   <div class="flex items-center justify-between">
     <h3 class="text-sm font-bold text-white">Nhật ký &amp; ghi chú</h3>
@@ -136,30 +162,6 @@
       </div>
     </template>
     <p x-show="items.length === 0" class="text-xs text-slate-500 text-center py-3">Chưa có mục nào. Hãy viết mục đầu tiên.</p>
-  </div>
-</section>
-<section x-data="cap_reminder()" x-init="init()" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
-  <div class="flex items-center justify-between">
-    <h3 class="text-sm font-bold text-white">Nhắc hẹn</h3>
-    <span class="text-[11px] text-slate-400"><span class="text-amber-400 font-bold" x-text="pending"></span> việc sắp tới</span>
-  </div>
-  <div x-show="alertText" class="p-3 bg-amber-500/15 border border-amber-500/40 rounded-xl text-sm text-amber-200" x-text="alertText"></div>
-  <input x-model="text" placeholder="Nhắc tôi việc gì?" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500">
-  <input type="datetime-local" x-model="when" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white">
-  <button @click="add()" class="w-full py-2 bg-amber-500 text-slate-950 font-bold text-sm rounded-xl">Đặt nhắc hẹn</button>
-  <p class="text-[11px] text-slate-500">Ứng dụng nhắc bằng chuông và rung khi đang mở. Hãy giữ ứng dụng mở để không bỏ lỡ.</p>
-  <div class="space-y-1.5">
-    <template x-for="it in sorted" :key="it.id">
-      <div class="flex items-center space-x-3 p-2.5 bg-slate-950 border border-slate-800 rounded-xl">
-        <input type="checkbox" :checked="it.done" @change="toggle(it.id)" class="w-5 h-5 accent-amber-500">
-        <div class="flex-1 min-w-0">
-          <p class="text-sm truncate" :class="it.done ? 'line-through text-slate-500' : 'text-slate-100'" x-text="it.t"></p>
-          <p class="text-[11px]" :class="(!it.done && it.at <= now) ? 'text-rose-400' : 'text-slate-500'" x-text="fmt(it.at) + ((!it.done && it.at <= now) ? ' · Đã đến hạn' : '')"></p>
-        </div>
-        <button @click="del(it.id)" class="text-[11px] text-rose-400">Xóa</button>
-      </div>
-    </template>
-    <p x-show="items.length === 0" class="text-xs text-slate-500 text-center py-3">Chưa có nhắc hẹn nào.</p>
   </div>
 </section>
 <section x-data="cap_export()" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
@@ -196,7 +198,7 @@
     <div class="p-6 rounded-lg bg-slate-900 border border-slate-800 flex flex-col items-center max-w-md mx-auto">
       <div class="w-full flex justify-center p-3 rounded-lg bg-slate-950 border border-slate-800">
         <img
-          src="https://img.vietqr.io/image/970463-1789066-compact2.png"
+          src="https://img.vietqr.io/image/970436-1346677-compact2.png"
           alt="Mã QR Chuyển Khoản"
           class="w-64 h-auto rounded"
           loading="lazy"
@@ -206,15 +208,15 @@
       <div class="mt-6 w-full space-y-3 text-sm">
         <div class="flex justify-between items-center py-2 border-b border-slate-800">
           <span class="text-slate-400">Ngân hàng thụ hưởng</span>
-          <span class="font-medium text-white">Mã định danh (BIN): 970463</span>
+          <span class="font-medium text-white">Mã định danh (BIN): 970436</span>
         </div>
         <div class="flex justify-between items-center py-2 border-b border-slate-800">
           <span class="text-slate-400">Số tài khoản</span>
-          <span class="font-mono font-bold text-amber-500">1789066</span>
+          <span class="font-mono font-bold text-amber-500">1346677</span>
         </div>
         <div class="flex justify-between items-center py-2">
           <span class="text-slate-400">Chủ tài khoản</span>
-          <span class="font-semibold text-white uppercase">AN Nhien TU Tai</span>
+          <span class="font-semibold text-white uppercase">An An</span>
         </div>
       </div>
     </div>
@@ -243,9 +245,9 @@
       <div class="p-5 rounded-lg bg-slate-900 border border-slate-800 space-y-3">
         <h2 class="text-sm font-semibold text-white uppercase tracking-wider">Thông Tin Chủ Sở Hữu</h2>
         <div class="text-sm space-y-1">
-          <p><span class="text-slate-400">Người đại diện:</span> <span class="text-white font-medium uppercase">AN Nhien TU Tai</span></p>
-          <p><span class="text-slate-400">Số tài khoản nhận tiền:</span> <span class="font-mono text-amber-500">1789066</span></p>
-          <p><span class="text-slate-400">Mã ngân hàng (BIN):</span> <span class="text-slate-300">970463</span></p>
+          <p><span class="text-slate-400">Người đại diện:</span> <span class="text-white font-medium uppercase">An An</span></p>
+          <p><span class="text-slate-400">Số tài khoản nhận tiền:</span> <span class="font-mono text-amber-500">1346677</span></p>
+          <p><span class="text-slate-400">Mã ngân hàng (BIN):</span> <span class="text-slate-300">970436</span></p>
         </div>
       </div>
 
@@ -468,6 +470,161 @@ function cap_expense() {
     get sumOut() { return this.items.filter(function (x) { return x.type === 'out'; }).reduce(function (s, x) { return s + x.amt; }, 0); }
   };
 }
+(function () {
+  var pid = (location.pathname.match(/\/app\/([^\/?#]+)/) || [])[1] || 'local';
+  var KEY = 'ggelock:' + pid;
+  var preview = (location.protocol === 'about:' || String(location.href).indexOf('about:') === 0);
+  var can = !!(window.crypto && window.crypto.subtle && window.TextEncoder);
+  var ui = null, hiddenAt = 0;
+  function read() { try { var v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+  function write(o) {
+    try { if (o) localStorage.setItem(KEY, JSON.stringify(o)); else localStorage.removeItem(KEY); return true; } catch (e) { return false; }
+  }
+  function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }
+  function unhex(s) { var a = new Uint8Array(s.length / 2); for (var i = 0; i < a.length; i++) a[i] = parseInt(s.substr(i * 2, 2), 16); return a; }
+  function derive(pin, saltHex) {
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveBits']).then(function (k) {
+      return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: unhex(saltHex), iterations: 150000, hash: 'SHA-256' }, k, 256);
+    }).then(hex);
+  }
+  function validPin(p) { return /^[0-9]{4,6}$/.test(String(p || '')); }
+  function waitFor(fails) {
+    if (fails < 5) return 0;
+    var n = Math.floor(fails / 5) - 1, s = 30 * Math.pow(2, n);
+    return Math.min(s, 900) * 1000;
+  }
+  var api = {
+    supported: can && !preview,
+    preview: preview,
+    isSet: function () { var r = read(); return !!(r && r.hash && r.salt); },
+    set: function (pin) {
+      if (!can || !validPin(pin)) return Promise.resolve(false);
+      var salt = hex(crypto.getRandomValues(new Uint8Array(16)));
+      return derive(String(pin), salt).then(function (h) { return write({ salt: salt, hash: h, fails: 0, until: 0 }); });
+    },
+    check: function (pin) {
+      var r = read();
+      if (!r) return Promise.resolve({ ok: true, wait: 0 });
+      var now = Date.now();
+      if (r.until && r.until > now) return Promise.resolve({ ok: false, wait: Math.ceil((r.until - now) / 1000) });
+      if (!validPin(pin)) return Promise.resolve({ ok: false, wait: 0 });
+      return derive(String(pin), r.salt).then(function (h) {
+        if (h === r.hash) { r.fails = 0; r.until = 0; write(r); return { ok: true, wait: 0 }; }
+        r.fails = (r.fails || 0) + 1;
+        var w = waitFor(r.fails);
+        r.until = w ? Date.now() + w : 0;
+        write(r);
+        return { ok: false, wait: Math.ceil(w / 1000), left: w ? 0 : 5 - (r.fails % 5) };
+      });
+    },
+    remove: function () { return write(null); },
+    wipe: function () {
+      try {
+        var drop = [];
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k && (k.indexOf('gge:' + pid + ':') === 0 || k.indexOf('ggets:' + pid + ':') === 0 || k === KEY)) drop.push(k);
+        }
+        drop.forEach(function (k) { localStorage.removeItem(k); });
+      } catch (e) {}
+    },
+    lockNow: function () { if (api.isSet()) show(); }
+  };
+  function el(tag, css, text) {
+    var e = document.createElement(tag);
+    if (css) e.style.cssText = css;
+    if (text) e.textContent = text;
+    return e;
+  }
+  function show() {
+    if (!document.body) return;
+    if (ui) { ui.style.display = 'flex'; if (ui._input) { ui._input.value = ''; try { ui._input.focus(); } catch (e) {} } return; }
+    ui = el('div', 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483000;background:#020617;color:#fff;display:flex;align-items:center;justify-content:center;padding:24px;font-family:inherit');
+    ui.id = 'gge-lock-overlay';
+    var box = el('div', 'max-width:320px;width:100%;text-align:center');
+    box.appendChild(el('div', 'font-size:18px;font-weight:700;margin-bottom:6px', 'Ứng dụng đang khóa'));
+    box.appendChild(el('div', 'font-size:12px;color:#94a3b8;margin-bottom:16px', 'Nhập mã PIN để mở.'));
+    var inp = el('input', 'width:100%;box-sizing:border-box;text-align:center;letter-spacing:8px;font-size:22px;padding:12px;border-radius:14px;border:1px solid #334155;background:#0f172a;color:#fff');
+    inp.type = 'password'; inp.setAttribute('inputmode', 'numeric'); inp.maxLength = 6; inp.autocomplete = 'off';
+    var msg = el('div', 'min-height:18px;font-size:12px;color:#fbbf24;margin:10px 0');
+    var btn = el('button', 'width:100%;padding:12px;border:0;border-radius:14px;background:#f59e0b;color:#020617;font-weight:700;font-size:14px', 'Mở khóa');
+    var forgot = el('button', 'margin-top:16px;background:none;border:0;color:#94a3b8;font-size:12px;text-decoration:underline', 'Quên mã PIN?');
+    var forgotBox = el('div', 'display:none;margin-top:12px;font-size:12px;color:#cbd5e1');
+    forgotBox.appendChild(el('div', 'margin-bottom:8px', 'Để mở lại, bạn cần xóa dữ liệu trên thiết bị này và đặt lại ứng dụng. Dữ liệu đã sao lưu có thể khôi phục sau.'));
+    var wipeBtn = el('button', 'padding:10px 14px;border-radius:12px;border:1px solid #be123c;background:none;color:#fda4af;font-size:12px', 'Xóa dữ liệu trên thiết bị này');
+    forgotBox.appendChild(wipeBtn);
+    box.appendChild(inp); box.appendChild(msg); box.appendChild(btn); box.appendChild(forgot); box.appendChild(forgotBox);
+    ui.appendChild(box);
+    ui._input = inp;
+    function go() {
+      msg.textContent = '';
+      api.check(inp.value).then(function (r) {
+        if (r.ok) { ui.style.display = 'none'; inp.value = ''; return; }
+        inp.value = '';
+        if (r.wait) msg.textContent = 'Nhập sai nhiều lần. Hãy thử lại sau ' + r.wait + ' giây.';
+        else msg.textContent = 'Mã PIN chưa đúng.' + (r.left ? ' Còn ' + r.left + ' lần trước khi bị tạm khóa.' : '');
+      });
+    }
+    btn.onclick = go;
+    inp.onkeydown = function (ev) { if (ev.key === 'Enter') go(); };
+    forgot.onclick = function () { forgotBox.style.display = forgotBox.style.display === 'none' ? 'block' : 'none'; };
+    wipeBtn.onclick = function () {
+      if (!confirm('Dữ liệu chưa sao lưu trên thiết bị này sẽ mất và không lấy lại được. Bạn chắc chắn?')) return;
+      api.wipe();
+      location.reload();
+    };
+    document.body.appendChild(ui);
+    try { inp.focus(); } catch (e) {}
+  }
+  window.ggeLock = api;
+  function boot() { if (!preview && can && api.isSet()) show(); }
+  if (document.body) boot(); else document.addEventListener('DOMContentLoaded', boot);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { hiddenAt = Date.now(); return; }
+    if (!preview && can && api.isSet() && hiddenAt && Date.now() - hiddenAt > 60000) show();
+  });
+})();
+
+function cap_lock() {
+  return {
+    supported: false, preview: false, isSet: false,
+    a: '', b: '', cur: '', msg: '',
+    init: function () {
+      this.supported = !!(window.ggeLock && window.ggeLock.supported);
+      this.preview = !!(window.ggeLock && window.ggeLock.preview);
+      this.isSet = !!(window.ggeLock && window.ggeLock.isSet());
+    },
+    save: function () {
+      var self = this;
+      if (!/^[0-9]{4,6}$/.test(this.a)) { this.msg = 'Mã PIN gồm 4 đến 6 chữ số.'; return; }
+      if (this.a !== this.b) { this.msg = 'Hai lần nhập chưa giống nhau.'; return; }
+      ggeLock.set(this.a).then(function (ok) {
+        self.msg = ok ? 'Đã bật khóa. Lần mở sau ứng dụng sẽ hỏi mã PIN.' : 'Chưa bật được khóa. Hãy thử lại.';
+        self.isSet = ggeLock.isSet(); self.a = ''; self.b = ''; self.cur = '';
+      });
+    },
+    change: function () {
+      var self = this;
+      if (!/^[0-9]{4,6}$/.test(this.a)) { this.msg = 'Điền mã PIN mới gồm 4 đến 6 chữ số ở ô thứ hai.'; return; }
+      ggeLock.check(this.cur).then(function (r) {
+        if (!r.ok) { self.msg = r.wait ? 'Hãy thử lại sau ' + r.wait + ' giây.' : 'Mã PIN hiện tại chưa đúng.'; return; }
+        ggeLock.set(self.a).then(function (ok) {
+          self.msg = ok ? 'Đã đổi mã PIN.' : 'Chưa đổi được mã. Hãy thử lại.';
+          self.a = ''; self.cur = '';
+        });
+      });
+    },
+    turnOff: function () {
+      var self = this;
+      ggeLock.check(this.cur).then(function (r) {
+        if (!r.ok) { self.msg = r.wait ? 'Hãy thử lại sau ' + r.wait + ' giây.' : 'Mã PIN hiện tại chưa đúng.'; return; }
+        ggeLock.remove();
+        self.isSet = false; self.cur = ''; self.a = ''; self.msg = 'Đã tắt khóa.';
+      });
+    },
+    lockNow: function () { ggeLock.lockNow(); }
+  };
+}
 function cap_journal() {
   return {
     items: [], text: '', q: '',
@@ -483,42 +640,6 @@ function cap_journal() {
       var q = this.q.trim().toLowerCase();
       return q ? this.items.filter(function (x) { return x.t.toLowerCase().indexOf(q) > -1; }) : this.items;
     }
-  };
-}
-function cap_reminder() {
-  return {
-    items: [], text: '', when: '', now: Date.now(), alertText: '', h: null,
-    init: function () {
-      this.items = ggeStore.get('reminder', []);
-      var self = this;
-      this.check();
-      this.h = setInterval(function () { self.check(); }, 15000);
-    },
-    fmt: function (t) { return ggeStore.fmt(t); },
-    add: function () {
-      var t = this.text.trim(), at = Date.parse(this.when);
-      if (!t || isNaN(at)) { this.alertText = 'Hãy nhập nội dung và chọn thời gian nhắc.'; return; }
-      this.alertText = '';
-      this.items.push({ id: ggeStore.uid(), t: t, at: at, done: false, notified: false });
-      this.text = ''; this.when = ''; ggeStore.save('reminder', this.items);
-      try { if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission(); } catch (e) {}
-    },
-    toggle: function (id) { this.items.forEach(function (x) { if (x.id === id) x.done = !x.done; }); ggeStore.save('reminder', this.items); },
-    del: function (id) { this.items = this.items.filter(function (x) { return x.id !== id; }); ggeStore.save('reminder', this.items); },
-    check: function () {
-      this.now = Date.now();
-      var fired = null, self = this;
-      this.items.forEach(function (x) {
-        if (!x.done && !x.notified && x.at <= self.now) { x.notified = true; fired = x; }
-      });
-      if (fired) {
-        this.alertText = 'Đến giờ: ' + fired.t;
-        ggeStore.beep(); ggeStore.save('reminder', this.items);
-        try { if ('Notification' in window && Notification.permission === 'granted') new Notification('Nhắc hẹn', { body: fired.t }); } catch (e) {}
-      }
-    },
-    get sorted() { return this.items.slice().sort(function (a, b) { return a.at - b.at; }); },
-    get pending() { return this.items.filter(function (x) { return !x.done; }).length; }
   };
 }
 function cap_export() {
