@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tạp Hóa Thông Minh - SmartMart Pro</title>
+    <title>GGE Sovereign App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
@@ -14,7 +14,7 @@
 </head>
 <body class="h-full flex flex-col antialiased select-none font-sans" x-data="childAppRuntime()" x-init="init()">
     <header class="h-12 border-b border-slate-800 bg-slate-900/90 px-4 flex items-center justify-between shrink-0">
-        <span class="text-xs font-bold text-amber-400 font-mono tracking-wider truncate min-w-0 flex-1 mr-2 whitespace-nowrap">Tạp Hóa Thông Minh - SmartMart Pro</span>
+        <span class="text-xs font-bold text-amber-400 font-mono tracking-wider truncate min-w-0 flex-1 mr-2 whitespace-nowrap">GGE Sovereign App</span>
         <div class="flex items-center space-x-1 bg-slate-950 border border-slate-800 rounded-xl p-1 text-[11px] font-mono shrink-0 whitespace-nowrap">
             <button @click="currentScreen = 'overview'" :class="currentScreen === 'overview' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'" class="px-2 py-0.5 rounded-lg transition">Tổng Quan</button>
             <button @click="currentScreen = 'business'" :class="currentScreen === 'business' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'" class="px-2 py-0.5 rounded-lg transition">Nghiệp Vụ</button>
@@ -23,64 +23,60 @@
         </div>
     </header>
 
-    <main class="w-full min-h-screen bg-slate-950 text-slate-300 p-4 sm:p-6 md:p-8">
-  <!-- Màn hình 1: Tổng Quan (overview) -->
+    <main class="min-h-screen bg-slate-950 text-slate-300 px-4 py-6 sm:px-8 sm:py-10">
   <div x-show="currentScreen === 'overview'" class="space-y-6 max-w-4xl mx-auto">
-    <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-wide">
-        Tạp Hóa Thông Minh - SmartMart Pro
-      </h1>
+    <div class="border-b border-slate-800 pb-5">
+      <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">GGE Sovereign App</h1>
       <p class="mt-2 text-slate-400 text-sm sm:text-base leading-relaxed">
-        Nền tảng quản lý toàn diện dành cho chủ tiệm tạp hóa và siêu thị mini hiện đại, giải quyết trọn gói bài toán bán lẻ tại quầy, ghi nhận sổ sách và theo dõi nợ khách quen tiện lợi.
+        Nền tảng quản lý toàn diện dành cho chủ tiệm tạp hóa và siêu thị mini hiện đại, giải quyết trọn gói bài toán bán lẻ tại quầy, quản lý hàng nghìn mã hàng hóa linh hoạt, kiểm soát tồn kho thông minh, theo dõi sổ nợ khách quen và tích hợp thanh toán mã QR chuyển thẳng về tài khoản cá nhân của chủ tiệm.
       </p>
     </div>
 
-    <!-- Thẻ số liệu thực tế -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div class="p-5 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
-        <div class="text-xs uppercase tracking-wider text-slate-400 font-medium">Tổng bản ghi đã lưu</div>
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="text-sm font-medium text-slate-400">Tổng số mục đã ghi nhận</div>
         <div class="mt-2 text-3xl font-bold text-amber-500" x-text="$store.gge.items">0</div>
-        <p class="mt-1 text-xs text-slate-400">Các mục thu chi, ghi chú và lịch hẹn trong tiệm</p>
+        <p class="mt-1 text-xs text-slate-500">Dữ liệu thực tế được lưu trữ an toàn ngay trên thiết bị của bạn.</p>
       </div>
-      <div class="p-5 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
-        <div class="text-xs uppercase tracking-wider text-slate-400 font-medium">Trạng thái quầy thu ngân</div>
-        <div class="mt-2 text-xl font-semibold text-emerald-400">Sẵn sàng vận hành</div>
-        <p class="mt-1 text-xs text-slate-400">Hệ thống mở cho các giao dịch trực tiếp tại quầy</p>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="text-sm font-medium text-slate-400">Trạng thái vận hành</div>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="inline-block w-3 h-3 rounded-full bg-emerald-500"></span>
+          <span class="text-lg font-semibold text-white">Sẵn sàng phục vụ</span>
+        </div>
+        <p class="mt-1 text-xs text-slate-500">Hỗ trợ ghi chép thu chi, công nợ và sổ sách liên tục tại quầy.</p>
       </div>
     </div>
 
-    <!-- Giới thiệu các chức năng cốt lõi -->
-    <div class="p-5 rounded-xl bg-slate-900 border border-slate-800">
-      <h2 class="text-lg font-semibold text-white mb-3">Các tiện ích quản lý của cửa hàng</h2>
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+      <h2 class="text-lg font-semibold text-white mb-3">Công cụ quản lý sẵn có</h2>
       <ul class="space-y-2 text-sm text-slate-300">
         <li class="flex items-start gap-2">
           <span class="text-amber-500 font-bold">•</span>
-          <span><strong>Sổ thu chi:</strong> Ghi chép từng dòng tiền bán hàng lẻ, nhập buôn và chi phí sinh hoạt tại quầy.</span>
+          <span><strong class="text-white">Sổ thu chi:</strong> Ghi nhận tức thì dòng tiền bán lẻ hàng ngày, theo dõi các khoản thanh toán tiền mặt và chuyển khoản.</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="text-amber-500 font-bold">•</span>
-          <span><strong>Nhật ký & ghi chú:</strong> Ghi nhớ danh sách khách nợ, số điện thoại và thỏa thuận mua hàng.</span>
+          <span><strong class="text-white">Nhật ký & ghi chú:</strong> Lưu giữ chi tiết sổ nợ từng khách quen trong xóm và thông tin nguồn hàng nhập.</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="text-amber-500 font-bold">•</span>
-          <span><strong>Nhắc hẹn:</strong> Lên lịch ngày hẹn thanh toán nợ của khách và hạn trả nợ nhà phân phối.</span>
+          <span><strong class="text-white">Nhắc hẹn:</strong> Đặt lịch hẹn ngày thanh toán tiền hàng của nhà cung cấp và ngày thu hồi công nợ khách mua chịu.</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="text-amber-500 font-bold">•</span>
-          <span><strong>Sao lưu dữ liệu:</strong> Tự động gìn giữ hồ sơ bán hàng an toàn ngay trên máy của chủ tiệm.</span>
+          <span><strong class="text-white">Sao lưu dữ liệu:</strong> Chủ động lưu trữ và giữ gìn toàn bộ sổ sách kinh doanh độc lập.</span>
         </li>
       </ul>
     </div>
   </div>
 
-  <!-- Màn hình 2: Nghiệp Vụ Chính (business) -->
   <div x-show="currentScreen === 'business'" class="space-y-6 max-w-4xl mx-auto">
     <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white">Nghiệp Vụ Cửa Hàng</h1>
-      <p class="mt-1 text-sm text-slate-400">Quản lý thu chi, sổ nợ khách hàng, ghi chú việc tiệm và lịch hẹn trả tiền hàng.</p>
+      <h2 class="text-xl sm:text-2xl font-bold text-white">Nghiệp vụ quản lý bán hàng</h2>
+      <p class="mt-1 text-sm text-slate-400">Không gian thực hiện trực tiếp các tác vụ ghi chép sổ sách, công nợ khách quen và lịch hẹn của tiệm.</p>
     </div>
-    
-    <!-- Hệ thống tự động kích hoạt tính năng nghiệp vụ -->
     <!--gge-cap-html:start--><section x-data="cap_expense()" x-init="init()" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
   <h3 class="text-sm font-bold text-white">Sổ thu chi</h3>
   <div class="grid grid-cols-3 gap-2 text-center">
@@ -175,86 +171,84 @@
 </section><!--gge-cap-html:end-->
   </div>
 
-  <!-- Màn hình 3: Cổng Thanh Toán VietQR (payment) -->
-  <div x-show="currentScreen === 'payment'" class="space-y-6 max-w-md mx-auto text-center">
-    <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white">Thanh Toán Chuyển Khoản</h1>
-      <p class="mt-1 text-sm text-slate-400">Khách mua hàng quét mã VietQR để chuyển khoản trực tiếp cho chủ tiệm</p>
+  <div x-show="currentScreen === 'payment'" class="space-y-6 max-w-xl mx-auto">
+    <div class="border-b border-slate-800 pb-4 text-center">
+      <h2 class="text-xl sm:text-2xl font-bold text-white">Cổng Thanh Toán Quẹt Mã QR</h2>
+      <p class="mt-1 text-sm text-slate-400">Khách mua hàng quét mã để chuyển khoản trực tiếp về tài khoản chủ tiệm</p>
     </div>
 
-    <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg flex flex-col items-center">
-      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 inline-block mb-4">
-        <img 
-          src="https://img.vietqr.io/image/970463-1789065-compact2.png" 
-          alt="Mã VietQR thanh toán cửa hàng SmartMart Pro" 
-          class="w-64 h-auto rounded-lg mx-auto"
-        />
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center space-y-5 shadow-lg">
+      <div class="flex justify-center">
+        <div class="p-3 bg-slate-900 rounded-xl inline-block shadow-inner">
+          <img 
+            src="https://img.vietqr.io/image/970463-1789066-compact2.png" 
+            alt="Mã VietQR thanh toán chủ tiệm" 
+            class="w-64 h-auto max-w-full rounded"
+          />
+        </div>
       </div>
 
-      <div class="w-full text-left space-y-2 bg-slate-950 p-4 rounded-xl border border-slate-800 text-sm">
-        <div class="flex justify-between items-center py-1 border-b border-slate-800">
-          <span class="text-slate-400">Chủ tài khoản:</span>
-          <span class="font-semibold text-white">AN Nhien</span>
+      <div class="space-y-2 text-sm divide-y divide-slate-800">
+        <div class="pt-2 flex justify-between items-center">
+          <span class="text-slate-400">Ngân hàng thụ hưởng:</span>
+          <span class="font-semibold text-white">Mã BIN 970463</span>
         </div>
-        <div class="flex justify-between items-center py-1 border-b border-slate-800">
+        <div class="pt-2 flex justify-between items-center">
           <span class="text-slate-400">Số tài khoản:</span>
-          <span class="font-mono font-semibold text-amber-500">1789065</span>
+          <span class="font-mono text-base font-bold text-amber-500">1789066</span>
         </div>
-        <div class="flex justify-between items-center py-1">
-          <span class="text-slate-400">Mã ngân hàng (BIN):</span>
-          <span class="font-mono text-slate-300">970463</span>
+        <div class="pt-2 flex justify-between items-center">
+          <span class="text-slate-400">Chủ tài khoản:</span>
+          <span class="font-semibold text-white">AN NHIEN TAI</span>
         </div>
       </div>
-      
-      <p class="mt-4 text-xs text-slate-400 text-center">
-        Tiền chuyển thẳng vào tài khoản chủ tiệm ngay khi giao dịch thành công.
+
+      <p class="text-xs text-slate-500">
+        Tiền chuyển thẳng 100% vào tài khoản của chủ tiệm mà không qua bất kỳ khâu trung gian nào.
       </p>
     </div>
   </div>
 
-  <!-- Màn hình 4: Cài Đặt Quản Trị (admin) -->
   <div x-show="currentScreen === 'admin'" class="space-y-6 max-w-2xl mx-auto">
     <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white">Cài Đặt Quản Trị</h1>
-      <p class="mt-1 text-sm text-slate-400">Thông tin cửa hàng và quản lý tài khoản chủ sở hữu</p>
+      <h2 class="text-xl sm:text-2xl font-bold text-white">Cài Đặt & Quản Trị Ứng Dụng</h2>
+      <p class="mt-1 text-sm text-slate-400">Thông tin sở hữu và quyền quản lý dữ liệu sổ sách cửa hàng</p>
     </div>
 
-    <!-- Thông tin ứng dụng và chủ tiệm -->
-    <div class="p-6 rounded-xl bg-slate-900 border border-slate-800 space-y-4">
-      <h2 class="text-lg font-semibold text-white">Hồ Sơ Cửa Hàng</h2>
-      <div class="space-y-3 text-sm">
-        <div>
-          <span class="text-slate-400 block text-xs">Tên cửa hàng:</span>
-          <span class="text-white font-medium">Tạp Hóa Thông Minh - SmartMart Pro</span>
-        </div>
-        <div>
-          <span class="text-slate-400 block text-xs">Chủ sở hữu tiếp nhận doanh thu:</span>
-          <span class="text-white font-medium">AN Nhien</span>
-        </div>
-        <div>
-          <span class="text-slate-400 block text-xs">Mục đích sử dụng:</span>
-          <p class="text-slate-300 text-xs leading-relaxed mt-1">
-            Quản lý bán lẻ, ghi sổ nợ khách hàng làng xóm, quản lý tồn hàng và thu tiền trực tiếp tại quầy.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Khu vực tác vụ nhạy cảm -->
-    <div class="p-6 rounded-xl bg-slate-900 border border-red-900/40 space-y-4">
-      <h2 class="text-lg font-semibold text-rose-400">Khu Vực Nguy Hiểm</h2>
-      <p class="text-xs text-slate-400 leading-relaxed">
-        Thao tác xóa sẽ dọn sạch toàn bộ dữ liệu giao dịch thu chi, sổ nợ và các mục lưu trữ của tiệm. Vui lòng cân nhắc trước khi tiến hành.
-      </p>
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
       <div>
-        <button 
-          type="button" 
-          @click="purgeAccount()" 
-          class="px-4 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-medium text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-slate-900"
-        >
-          Xóa Dữ Liệu Cửa Hàng
-        </button>
+        <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider">Tên ứng dụng</div>
+        <div class="text-lg font-bold text-white mt-1">GGE Sovereign App</div>
       </div>
+
+      <div>
+        <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider">Mô tả nghiệp vụ</div>
+        <p class="text-sm text-slate-300 mt-1 leading-relaxed">
+          Nền tảng quản lý toàn diện dành cho chủ tiệm tạp hóa và siêu thị mini hiện đại, giải quyết trọn gói bài toán bán lẻ tại quầy, quản lý hàng nghìn mã hàng hóa linh hoạt, kiểm soát tồn kho thông minh, theo dõi sổ nợ khách quen và tích hợp thanh toán mã QR chuyển thẳng về tài khoản cá nhân của chủ tiệm.
+        </p>
+      </div>
+
+      <div class="border-t border-slate-800 pt-4">
+        <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider mb-2">Thông tin chủ sở hữu</div>
+        <div class="text-sm space-y-1 text-slate-300">
+          <div><span class="text-slate-500">Chủ tài khoản:</span> <strong class="text-white">AN NHIEN TAI</strong></div>
+          <div><span class="text-slate-500">Số tài khoản:</span> <strong class="text-white font-mono">1789066</strong> (Mã BIN: 970463)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-slate-900 border border-red-950/60 rounded-xl p-6 space-y-3">
+      <h3 class="text-base font-semibold text-red-400">Xóa dữ liệu ứng dụng</h3>
+      <p class="text-xs text-slate-400 leading-relaxed">
+        Hành động này sẽ xóa toàn bộ các mục đã lưu, sổ thu chi và thông tin trên thiết bị. Thao tác này không thể hoàn tác.
+      </p>
+      <button 
+        type="button" 
+        @click="purgeAccount()" 
+        class="w-full sm:w-auto px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-950"
+      >
+        Xóa toàn bộ dữ liệu
+      </button>
     </div>
   </div>
 </main>
