@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GGE Sovereign App</title>
+    <title>Tạp Hóa Mini</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
@@ -14,7 +14,7 @@
 </head>
 <body class="h-full flex flex-col antialiased select-none font-sans" x-data="childAppRuntime()" x-init="init()">
     <header class="h-12 border-b border-slate-800 bg-slate-900/90 px-4 flex items-center justify-between shrink-0">
-        <span class="text-xs font-bold text-amber-400 font-mono tracking-wider truncate min-w-0 flex-1 mr-2 whitespace-nowrap">GGE Sovereign App</span>
+        <span class="text-xs font-bold text-amber-400 font-mono tracking-wider truncate min-w-0 flex-1 mr-2 whitespace-nowrap">Tạp Hóa Mini</span>
         <div class="flex items-center space-x-1 bg-slate-950 border border-slate-800 rounded-xl p-1 text-[11px] font-mono shrink-0 whitespace-nowrap">
             <button @click="currentScreen = 'overview'" :class="currentScreen === 'overview' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'" class="px-2 py-0.5 rounded-lg transition">Tổng Quan</button>
             <button @click="currentScreen = 'business'" :class="currentScreen === 'business' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'" class="px-2 py-0.5 rounded-lg transition">Nghiệp Vụ</button>
@@ -27,7 +27,7 @@
   <!-- Màn hình 1: Tổng Quan -->
   <div x-show="currentScreen === 'overview'" class="space-y-6">
     <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white tracking-wide">GGE Sovereign App</h1>
+      <h1 class="text-2xl font-bold text-white tracking-wide">Tạp Hóa Mini</h1>
       <p class="mt-2 text-sm text-slate-300 leading-relaxed">
         Nền tảng quản lý toàn diện dành cho chủ tiệm tạp hóa và siêu thị mini hiện đại, giải quyết trọn gói bài toán bán lẻ tại quầy, quản lý hàng nghìn mã hàng hóa linh hoạt, kiểm soát tồn kho thông minh, theo dõi sổ nợ khách quen và tích hợp thanh toán mã QR chuyển thẳng về tài khoản cá nhân của chủ tiệm.
       </p>
@@ -214,7 +214,7 @@
         </div>
         <div class="flex justify-between items-center py-2">
           <span class="text-slate-400">Chủ tài khoản</span>
-          <span class="font-semibold text-white uppercase">AN Nhien Tai</span>
+          <span class="font-semibold text-white uppercase">AN Nhien TU Tai</span>
         </div>
       </div>
     </div>
@@ -233,7 +233,7 @@
       <div class="p-5 rounded-lg bg-slate-900 border border-slate-800 space-y-3">
         <h2 class="text-sm font-semibold text-white uppercase tracking-wider">Thông Tin Ứng Dụng</h2>
         <div class="text-sm space-y-1">
-          <p><span class="text-slate-400">Tên ứng dụng:</span> <span class="text-white font-medium">GGE Sovereign App</span></p>
+          <p><span class="text-slate-400">Tên ứng dụng:</span> <span class="text-white font-medium">Tạp Hóa Mini</span></p>
           <p class="text-slate-300 leading-relaxed pt-1">
             <span class="text-slate-400">Mô tả nghiệp vụ:</span> Nền tảng quản lý toàn diện dành cho chủ tiệm tạp hóa và siêu thị mini hiện đại, giải quyết trọn gói bài toán bán lẻ tại quầy, quản lý hàng nghìn mã hàng hóa linh hoạt, kiểm soát tồn kho thông minh, theo dõi sổ nợ khách quen và tích hợp thanh toán mã QR chuyển thẳng về tài khoản cá nhân của chủ tiệm.
           </p>
@@ -243,7 +243,7 @@
       <div class="p-5 rounded-lg bg-slate-900 border border-slate-800 space-y-3">
         <h2 class="text-sm font-semibold text-white uppercase tracking-wider">Thông Tin Chủ Sở Hữu</h2>
         <div class="text-sm space-y-1">
-          <p><span class="text-slate-400">Người đại diện:</span> <span class="text-white font-medium uppercase">AN Nhien Tai</span></p>
+          <p><span class="text-slate-400">Người đại diện:</span> <span class="text-white font-medium uppercase">AN Nhien TU Tai</span></p>
           <p><span class="text-slate-400">Số tài khoản nhận tiền:</span> <span class="font-mono text-amber-500">1789066</span></p>
           <p><span class="text-slate-400">Mã ngân hàng (BIN):</span> <span class="text-slate-300">970463</span></p>
         </div>
