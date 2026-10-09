@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: tap-hoa-thong-minh-smartmart-p-5712818a
+    runtime: python
+    plan: free
+    region: singapore
+    autoDeployTrigger: "commit"
+    healthCheckPath: /healthz
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: APP_ID
+        value: "proj_5712818aba40"
+      - key: ROOT_MOTHERSHIP_URL
+        value: https://gemini-genesis-engine.onrender.com
+      - key: APP_KEY
+        generateValue: true
+      - key: ENROLL_CODE
+        sync: false
